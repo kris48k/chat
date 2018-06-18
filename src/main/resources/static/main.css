@@ -1,4 +1,57 @@
+.content {
+    position: absolute;
+    bottom: 25px;
+    top: 20px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 500px;
+    border: #bbbbbb 1px solid;
+}
+
+.app {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+.list {
+    position: absolute;
+    bottom: 57px;
+    top: 0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+}
+
+.sendForm {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    display: flex;
+}
+
+.sendForm .sendForm-input {
+    flex: 2 0 0;
+    margin: 10px;
+}
+
+.sendForm .sendForm-send {
+    padding: 10px;
+    flex: 0 0 0;
+}
+
 .message {
+    padding: 15px 0;
+    line-height: 20px;
 }
 
 .message-author {
@@ -9,5 +62,6 @@
 }
 
 .message-time {
-    color: gray;
+    color: #bbbbbb;
+    font-size: small;
 }

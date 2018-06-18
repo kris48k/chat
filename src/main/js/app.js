@@ -2,7 +2,6 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-
 const rest = require('rest');
 const mime = require('rest/interceptor/mime');
 const entity = require('rest/interceptor/entity');
@@ -19,9 +18,9 @@ class Message extends React.Component {
 	    var message = this.props.data;
 	    return (
 	        <div className="message">
-                <div className="message-author">{message.userName}</div>
-                <div className="message-text">{message.text}</div>
-                <div className="message-time">{message.date}</div>
+                <div className="message-author">{ message.userName }</div>
+                <div className="message-text">{ message.text }</div>
+                <div className="message-time">{ message.date.toLocaleString() }</div>
             </div>
         );
 	}
@@ -47,16 +46,26 @@ class MessageList extends React.Component {
     render() {
         if (this.state.messages.length > 0) {
             var messages = this.state.messages.map(msg => <Message key={msg.date.getTime()} data={msg}/>);
-            return (<div className="message-list">{messages}</div>);
+            return (<div className="list">{messages}</div>);
         }
         return (<div>No messages yet.</div>);
     }
 }
 
+class InputMessage extends React.Component {
+    render() {
+        return (<div className="sendForm">
+            <input className="sendForm-input"/>
+            <a href="" className="sendForm-send">Send</a>
+        </div>)
+    };
+}
+
 class App extends React.Component {
     render() {
-        return (<div className="message-app">
+        return (<div className="app">
             <MessageList/>
+            <InputMessage/>
         </div>);
     }
 }
