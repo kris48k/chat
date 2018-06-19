@@ -3,11 +3,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const rest = require('rest');
-const mime = require('rest/interceptor/mime');
 const entity = require('rest/interceptor/entity');
-const client = rest
-              .chain(mime, { mime: 'application/json' })
-              .chain(entity);
+
+const InputMessage = require('./components/InputMessage');
 
 class Message extends React.Component {
 	constructor(props) {
@@ -52,20 +50,17 @@ class MessageList extends React.Component {
     }
 }
 
-class InputMessage extends React.Component {
-    render() {
-        return (<div className="sendForm">
-            <input className="sendForm-input"/>
-            <a href="" className="sendForm-send">Send</a>
-        </div>)
-    };
-}
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { name: 'Kristina Kurshakova' };
+    }
+
     render() {
         return (<div className="app">
             <MessageList/>
-            <InputMessage/>
+            <InputMessage name={this.state.name}/>
         </div>);
     }
 }
