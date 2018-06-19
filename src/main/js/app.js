@@ -28,17 +28,25 @@ class MessageList extends React.Component {
     constructor(props) {
         super(props);
         this.state = { messages: [] };
+        var evtSource = new EventSource("messages/newMessages");
+        evtSource.onmessage = (e) => {
+            var newMessages = [...this.state.messages];
+            newMessages.push(this.prepareMessage(JSON.parse(e.data)));
+            this.setState({ messages: newMessages });
+        }
     }
 
     componentDidMount() {
         rest({ method: 'GET', path: '/messages' }).done(response => {
             console.log("got msgs", response.entity);
-            var messages = JSON.parse(response.entity).map(m => {
-                m.date = new Date(m.time);
-                return m;
-            });
+            var messages = JSON.parse(response.entity).map(this.prepareMessage);
             this.setState({ messages: messages });
         });
+    }
+
+    prepareMessage(message) {
+        message.date = new Date(message.time);
+        return message;
     }
 
     render() {
