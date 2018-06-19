@@ -24,10 +24,13 @@
     top: 0;
     left: 0;
     right: 0;
+    padding: 0 20px;
+    overflow: scroll;
+    /*
     flex-direction: column;
     display: flex;
     justify-content: flex-end;
-    padding: 0 20px;
+    */
 }
 
 .sendForm {
@@ -55,10 +58,12 @@
 }
 
 .message-author {
+    word-wrap: break-word;
     color: gray;
 }
 
 .message-text {
+    word-wrap: break-word;
 }
 
 .message-time {
