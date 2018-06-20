@@ -11,6 +11,10 @@ class InputMessage extends React.Component {
         this.onKeyPress = this.onKeyPress.bind(this);
     }
 
+    componentDidMount(){
+        document.querySelector(".sendForm-input").focus();
+    }
+
     sendMessage(e) {
         e && e.preventDefault();
         rest.wrap(mime, { mime: 'application/json' })({

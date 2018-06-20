@@ -8,6 +8,10 @@ class LogInForm extends React.Component {
         this.state = { userName: '' };
     }
 
+    componentDidMount() {
+        document.querySelector(".loginForm-input").focus();
+    }
+
     onKeyPress(e) {
         if (e.key === 'Enter') {
             this.props.updateUserName(this.state.userName);
