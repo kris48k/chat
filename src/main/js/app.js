@@ -6,6 +6,7 @@ const rest = require('rest');
 const entity = require('rest/interceptor/entity');
 
 const InputMessage = require('./components/InputMessage');
+const LogInForm = require('./components/LoginForm');
 
 class Message extends React.Component {
 	constructor(props) {
@@ -13,12 +14,14 @@ class Message extends React.Component {
 	}
 
 	render() {
-	    var message = this.props.data;
+	    const message = this.props.data;
+	    const yours = message.userName === this.props.userName;
+        const className = "message" + (yours ? " message--yours" : "");
 	    return (
-	        <div className="message">
-                <div className="message-author">{ message.userName }</div>
-                <div className="message-text">{ message.text }</div>
-                <div className="message-time">{ message.date.toLocaleString() }</div>
+	        <div className={className}>
+                <div className="message-author message-item">{ message.userName }</div>
+                <div className="message-text message-item">{ message.text }</div>
+                <div className="message-time message-item">{ message.date.toLocaleString() }</div>
             </div>
         );
 	}
@@ -51,7 +54,7 @@ class MessageList extends React.Component {
 
     render() {
         if (this.state.messages.length > 0) {
-            var messages = this.state.messages.map(msg => <Message key={msg.date.getTime()} data={msg}/>);
+            var messages = this.state.messages.map(msg => <Message key={msg.date.getTime()} data={msg} userName={this.props.userName}/>);
             return (<div className="list">{messages}</div>);
         }
         return (<div>No messages yet.</div>);
@@ -62,14 +65,23 @@ class MessageList extends React.Component {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { name: 'Kristina Kurshakova' };
+        this.state = { userName: '' };
+        this.updateUserName = this.updateUserName.bind(this);
+    }
+
+    updateUserName(newUserName) {
+        this.setState({ userName: newUserName });
     }
 
     render() {
-        return (<div className="app">
-            <MessageList/>
-            <InputMessage name={this.state.name}/>
-        </div>);
+        if (this.state.userName === '') {
+            return <LogInForm updateUserName={this.updateUserName} />
+        } else {
+            return (<div className="app">
+                <MessageList userName={this.state.userName}/>
+                <InputMessage userName={this.state.userName}/>
+            </div>);
+        }
     }
 }
 

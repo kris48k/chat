@@ -5,7 +5,7 @@ const React = require('react');
 class InputMessage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { message: '', userName: 'Kristina Kurshakova' };
+        this.state = { message: '' };
         this.messageChange = this.messageChange.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.onKeyPress = this.onKeyPress.bind(this);
@@ -17,7 +17,7 @@ class InputMessage extends React.Component {
             method: 'POST',
             path: '/messages',
             entity: {
-                userName: this.state.userName, text: this.state.message
+                userName: this.props.userName, text: this.state.message
             }
         });
         this.setState({ message: '' });
