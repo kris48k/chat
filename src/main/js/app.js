@@ -31,12 +31,15 @@ class MessageList extends React.Component {
     constructor(props) {
         super(props);
         this.state = { messages: [] };
-        var evtSource = new EventSource("messages/newMessages");
-        evtSource.onmessage = (e) => {
-            var newMessages = [...this.state.messages];
-            newMessages.push(this.prepareMessage(JSON.parse(e.data)));
-            this.setState({ messages: newMessages });
-        }
+        let eventSource = new EventSource("messages/newMessages");
+        eventSource.onmessage = this.onMessageAdded.bind(this);
+    }
+
+    onMessageAdded(e) {
+        let newMessages = [...this.state.messages];
+        newMessages.push(this.prepareMessage(JSON.parse(e.data)));
+        this.setState({ messages: newMessages });
+        document.querySelector(".list").scrollTop = document.querySelector(".list").scrollHeight;
     }
 
     componentDidMount() {
