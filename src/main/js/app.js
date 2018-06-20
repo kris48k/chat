@@ -7,63 +7,7 @@ const entity = require('rest/interceptor/entity');
 
 const InputMessage = require('./components/InputMessage');
 const LogInForm = require('./components/LoginForm');
-
-class Message extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-	    const message = this.props.data;
-	    const yours = message.userName === this.props.userName;
-        const className = "message" + (yours ? " message--yours" : "");
-	    return (
-	        <div className={className}>
-                <div className="message-author message-item">{ message.userName }</div>
-                <div className="message-text message-item">{ message.text }</div>
-                <div className="message-time message-item">{ message.date.toLocaleString() }</div>
-            </div>
-        );
-	}
-}
-
-class MessageList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { messages: [] };
-        let eventSource = new EventSource("messages/newMessages");
-        eventSource.onmessage = this.onMessageAdded.bind(this);
-    }
-
-    onMessageAdded(e) {
-        let newMessages = [...this.state.messages];
-        newMessages.push(this.prepareMessage(JSON.parse(e.data)));
-        this.setState({ messages: newMessages });
-        document.querySelector(".list").scrollTop = document.querySelector(".list").scrollHeight;
-    }
-
-    componentDidMount() {
-        rest({ method: 'GET', path: '/messages' }).done(response => {
-            console.log("got msgs", response.entity);
-            var messages = JSON.parse(response.entity).map(this.prepareMessage);
-            this.setState({ messages: messages });
-        });
-    }
-
-    prepareMessage(message) {
-        message.date = new Date(message.time);
-        return message;
-    }
-
-    render() {
-        if (this.state.messages.length > 0) {
-            var messages = this.state.messages.map(msg => <Message key={msg.date.getTime()} data={msg} userName={this.props.userName}/>);
-            return (<div className="list">{messages}</div>);
-        }
-        return (<div>No messages yet.</div>);
-    }
-}
-
+const MessageList = require('./components/MessageList');
 
 class App extends React.Component {
     constructor(props) {
