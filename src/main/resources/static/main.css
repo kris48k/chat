@@ -33,6 +33,12 @@
     */
 }
 
+.list--empty {
+     position: absolute;
+     top: 50%;
+     left: 35%;
+ }
+
 .sendForm {
     position: absolute;
     bottom: 0;

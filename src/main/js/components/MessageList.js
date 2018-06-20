@@ -30,7 +30,7 @@ class MessageList extends React.Component {
             var messages = this.state.messages.map(msg => <Message key={msg.date.getTime()} data={msg} userName={this.props.userName}/>);
             return (<div className="list">{messages}</div>);
         }
-        return (<div>No messages yet.</div>);
+        return (<div className="list--empty">No messages yet.</div>);
     }
 }
 
